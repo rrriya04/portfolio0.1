@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Riya Lad | Portfolio</title>
+  <style>
+    :root {
+      --primary: #1a1a2e;
+      --accent: #f72585;
+      --background: #f1f1f1;
+      --text: #333;
+      --card-bg: #ffffff;
+      --gradient: linear-gradient(135deg, #7209b7, #f72585);
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--background);
+      color: var(--text);
+    }
+
+    header {
+      background: var(--primary);
+      padding: 0.5rem 1rem;
+      color: rgb(244, 238, 238);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav a {
+      color: white;
+      margin: 0 1rem;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    nav a:hover {
+      color: var(--accent);
+    }
+
+    .hero {
+      text-align: center;
+      padding: 4rem 2rem;
+      background: var(--gradient);
+      color: white;
+    }
+
+    .hero img {
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      border: 4px solid white;
+      margin-bottom: 1rem;
+    }
+
+    /* Make work section images smaller */
+    #work .work img {
+      max-width: 400px;
+      max-height: 350px;
+      width: auto;
+      height: auto;
+      border-radius: 20px;
+      object-fit: cover;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    section {
+      margin-bottom: 4rem;
+    }
+
+    h2 {
+      font-size: 2rem;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+
+    .projects, .skills {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .projects {
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+
+    .project {
+      background: var(--card-bg);
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .project:hover {
+      transform: translateY(-5px);
+    }
+
+    .project img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+
+    .skills {
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    }
+
+    .skill {
+      background: var(--card-bg);
+      padding: 1rem;
+      text-align: center;
+      font-weight: 600;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      opacity: 0;
+      transform: translateX(0);
+      animation-fill-mode: forwards;
+      animation-duration: 1s;
+      animation-timing-function: ease-out;
+    }
+
+    /* Animations for skills sliding in from left and right */
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-100%);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(100%);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    /* Assign animation classes */
+    .slide-in-left {
+      animation-name: slideInLeft;
+      animation-fill-mode: forwards;
+      animation-duration: 1s;
+      animation-timing-function: ease-out;
+    }
+
+    .slide-in-right {
+      animation-name: slideInRight;
+      animation-fill-mode: forwards;
+      animation-duration: 1s;
+      animation-timing-function: ease-out;
+    }
+
+    form {
+      background: var(--card-bg);
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      max-width: 600px;
+      margin: auto;
+    }
+
+    .skill-row {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .skill-row .skill-bar {
+      flex: 1;
+    }
+
+    .our-skills {
+      max-width: 900px;
+      margin: 1rem auto 2rem auto;
+    }
+
+    .skill-bar {
+      margin-bottom: 1rem;
+    }
+
+    .progress-label h6 {
+      margin: 0 0 0.3rem 0;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .progress {
+      background-color: #ddd;
+      border-radius: 18px;
+      overflow: hidden;
+      height: 36px;
+    }
+
+    .progress-bar {
+      height: 36px;
+      background: var(--accent);
+      transition: width 0.5s ease-in-out;
+    }
+
+    form input, form textarea {
+      width: 100%;
+      padding: 0.8rem;
+      margin-top: 0.5rem;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    form input[type="submit"] {
+      background: var(--accent);
+      color: white;
+      border: none;
+      margin-top: 1rem;
+      cursor: pointer;
+    }
+
+    footer {
+      background: var(--primary);
+      color: white;
+      text-align: center;
+      padding: 1rem;
+    }
+  </style>
+  <script>
+    // Scroll animation for Contact section
+    document.addEventListener('DOMContentLoaded', function() {
+      const contactSection = document.getElementById('contact');
+
+      // Initially hide contact section by translating it right
+      contactSection.style.transform = 'translateX(100%)';
+      contactSection.style.opacity = '0';
+      contactSection.style.transition = 'transform 0.8s ease-out, opacity 0.8s ease-out';
+
+      function checkContactInView() {
+        const rect = contactSection.getBoundingClientRect();
+        const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+
+        if (rect.top <= windowHeight && rect.bottom >= 0) {
+          contactSection.style.transform = 'translateX(0)';
+          contactSection.style.opacity = '1';
+          window.removeEventListener('scroll', checkContactInView);
+        }
+      }
+
+      window.addEventListener('scroll', checkContactInView);
+      // Check on load in case already in view
+      checkContactInView();
+    });
+
+    function handleSubmit(e) {
+      e.preventDefault();
+      alert("Thank you! Your message has been sent.");
+      e.target.reset();
+    }
+  </script>
+</head>
+<body>
+
+  <header>
+    <h2><span style="font-weight: bold; margin-right: 0.5rem; color: white;">RIYA</span>Riya Lad</h2>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <section class="hero" id="home">
+    <img src="RIYA1.jpeg" alt="Profile Picture">
+    <h1>Hello, I'm Riya Lad</h1>
+    <p>Programmer Student | AI Explorer | Creative Thinker</p>
+  </section>
+
+  <div class="container">
+
+    <section id="work">
+      <h2>Work</h2>
+      <div class="work">
+        <div class="work">
+          <img src="cisco phy 1.png" alt="Certificate 1">
+          <h3>Phyton 1</h3>
+          <p>I HAVE SUCCESSFULLY COMPLETED CISCO COURSE AND CERTIFICATION OF PYTHON ESSENTIAL 1.</p>
+        </div>
+        <div class="work">
+          <img src="kali linux.png" alt="Certificate 2">
+          <h3>Kali Linux</h3>
+          <p>I HAVE SUCCESSFULLY COMPLETED KALI LINUX COURSE AND CERTIFICATION OF KALI LINUX .</p>
+        </div>
+        <div class="work">
+          <img src="nasscom 1.png" alt="Certificate 3">
+          <h3>Nasscom</h3>
+          <p>I HAVE SUCCESSFULLY COMPLETED NASSCOM CERTIFICATION COURSE</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <h2>About Me</h2>
+      <p>First-year Computer Engineering student at MITAOE with a passion for coding and problem-solving. Skilled in Python, C, and I thrive on turning ideas into functional projects. Currently exploring AI/ML and open-source contributions.</p>
+
+      <h3 style="margin-top: 2rem; text-align: center;">Skills</h3>
+      <div class="our-skills">
+        <div class="skill-row">
+          <div class="skill-bar">
+            <div class="progress-label">
+              <h6>HTML</h6>
+            </div>
+            <div class="progress">
+              <div class="progress-bar" style="width: 90%; height: 36px; background-color: #f72585;"></div>
+            </div>
+          </div>
+          <div class="skill-bar">
+            <div class="progress-label">
+              <h6>Python</h6>
+            </div>
+            <div class="progress">
+              <div class="progress-bar" style="width: 85%; height: 36px; background-color: #f72585;"></div>
+            </div>
+          </div>
+        </div>
+        <div class="skill-row">
+          <div class="skill-bar">
+            <div class="progress-label">
+              <h6>Linux</h6>
+            </div>
+            <div class="progress">
+              <div class="progress-bar" style="width: 80%; height: 36px; background-color: #f72585;"></div>
+            </div>
+          </div>
+          <div class="skill-bar">
+            <div class="progress-label">
+              <h6>Data Visualisation</h6>
+            </div>
+            <div class="progress">
+              <div class="progress-bar" style="width: 75%; height: 36px; background-color: #f72585;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <h2>Contact Me</h2>
+      <form onsubmit="handleSubmit(event)">
+        <label for="name">Name:</label>
+        <input type="text" id="name" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" required>
+
+        <label for="message">Message:</label>
+        <textarea id="message" rows="5" required></textarea>
+
+        <input type="submit" value="Send Message">
+      </form>
+    </section>
+  </div>
+  
+
+  <footer>
+    <p>&copy; 2025 Riya Lad. All rights reserved.</p>
+  </footer>
+
+  <!-- Scroll to Top Button -->
+  <div id="scrollToTopBtn" title="Go to top">&#8679;</div>
+
+  <script>
+    function handleSubmit(e) {
+      e.preventDefault();
+      alert("Thank you! Your message has been sent.");
+      e.target.reset();
+    }
+
+    // Scroll to Top Button functionality
+    const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+
+    window.onscroll = function() {
+      if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+        scrollToTopBtn.style.display = "block";
+      } else {
+        scrollToTopBtn.style.display = "none";
+      }
+    };
+
+    scrollToTopBtn.addEventListener('click', function() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  </script>
+
+  <style>
+    #scrollToTopBtn {
+      display: none;
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 100;
+      font-size: 2.5rem;
+      background-color: var(--accent);
+      color: white;
+      cursor: pointer;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      text-align: center;
+      line-height: 50px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      transition: background-color 0.3s ease;
+      user-select: none;
+    }
+
+    #scrollToTopBtn:hover {
+      background-color: #d90466;
+    }
+      </style>
+
+  <script>
+    // Animate skills when skills section scrolls into view
+    document.addEventListener('DOMContentLoaded', function() {
+      const skillBars = document.querySelectorAll('.skill-bar');
+      const skillsSection = document.querySelector('.our-skills');
+
+      function animateSkills() {
+        const rect = skillsSection.getBoundingClientRect();
+        const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+
+        if (rect.top <= windowHeight && rect.bottom >= 0) {
+          skillBars.forEach((skillBar, index) => {
+            if (index < 2) {
+              skillBar.classList.add('slide-in-left');
+            } else {
+              skillBar.classList.add('slide-in-right');
+            }
+          });
+          window.removeEventListener('scroll', animateSkills);
+        }
+      }
+
+      window.addEventListener('scroll', animateSkills);
+      // Check on load in case already in view
+      animateSkills();
+    });
+  </script>
+</body>
